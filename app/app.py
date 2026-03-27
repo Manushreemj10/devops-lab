@@ -25,3 +25,12 @@ def health():
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 # added reset and stats routes
+@app.route("/reset", methods=["POST"])
+def reset():
+    r.set("visits", 0)
+    return jsonify({"message": "counter reset"})
+
+@app.route("/stats")
+def stats():
+    count = r.get("visits") or 0
+    return jsonify({"visits": int(count)})
